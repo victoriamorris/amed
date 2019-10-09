@@ -18,6 +18,7 @@ __status__ = '4 - Beta Development'
 
 
 DATABASE_PATH = 'K:\\AMED\\Exports\\Lookup\\amed_citations.db'
+# DATABASE_PATH = 'K:\\Users\\Victoria\\Projects\\Ongoing\\AMED\\Source code\\amed_citations.db'
 JOURNAL_ABBREVIATION_PATH = 'K:\\AMED\\Exports\\Lookup\\AMED journal title lookup table.txt'
 
 

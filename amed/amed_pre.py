@@ -226,9 +226,8 @@ def amed_pre(export_type='LM', ifile=None):
                                  errors='replace')
             amed = AMED(clean(line.strip()), accession_start + count, export_type=export_type)
             citation = amed.values['Citation']
-            # For citations without page numbers, append 20 characters from title
-            if citation.endswith(':'):
-                citation += re.sub(r'[^A-Z0-9]', '', amed.values['Title'].upper())[:20]
+            # Append 20 characters from title
+            citation += re.sub(r'[^A-Z0-9]', '', amed.values['Title'].upper())[:20]
             if citation and citation in citations_already_present:
                 print('Citation {} is a duplicate'.format(str(citation)))
                 efile.write(str(amed))
