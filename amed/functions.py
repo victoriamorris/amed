@@ -228,6 +228,6 @@ def clean_html(string):
 
 def name_format(name):
     if ',' not in name: return name
-    surname, forename = name.split(',')
+    surname, forename = name.rsplit(',',1)
     forename = re.sub(r'(\p{Upper})\s+(?=\p{Upper})', r'\1', re.sub(r'(\p{Upper})(\p{Lower}+|[\.\-])', r'\1', forename))
     return surname + forename
