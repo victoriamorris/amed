@@ -16,10 +16,8 @@ __status__ = '4 - Beta Development'
 #      Constants
 # ====================
 
-
-DATABASE_PATH = 'K:\\AMED\\Exports\\Lookup\\amed_citations.db'
-# DATABASE_PATH = 'K:\\Users\\Victoria\\Projects\\Ongoing\\AMED\\Source code\\amed_citations.db'
-JOURNAL_ABBREVIATION_PATH = 'K:\\AMED\\Exports\\Lookup\\AMED journal title lookup table.txt'
+DATABASE_PATH = '\\\\ad.bl.uk\\bssdata\\AMED\\Exports\\Lookup\\amed_citations.db'
+JOURNAL_ABBREVIATION_PATH = '\\\\ad.bl.uk\\bssdata\\AMED\\Exports\\Lookup\\AMED journal title lookup table.txt'
 
 
 # ====================
@@ -91,7 +89,7 @@ class CitationDatabase:
 
     def add_citations_from_file(self):
         date_time('Importing citations from file')
-        file = open('K:\\AMED\\Exports\\Lookup\\amed_citations_orig_list.txt', mode='r', encoding='utf-8', errors='replace')
+        file = open('\\\\ad.bl.uk\\bssdata\\AMED\\Exports\\Lookup\\amed_citations_orig_list.txt', mode='r', encoding='utf-8', errors='replace')
         citations = []
         for filelineno, line in enumerate(file):
             line = line.strip()
@@ -103,7 +101,7 @@ class CitationDatabase:
         date_time('Exporting citations from database')
         citations = self.get_citations()
         if not citations or len(citations) == 0: return
-        file = open('K:\\AMED\\Exports\\Lookup\\amed_citations_list.txt', mode='w', encoding='utf-8', errors='replace')
+        file = open('\\\\ad.bl.uk\\bssdata\\AMED\\Exports\\Lookup\\amed_citations_list.txt', mode='w', encoding='utf-8', errors='replace')
         for c in sorted(citations):
             file.write('{}\n'.format(str(c)))
         file.close()
