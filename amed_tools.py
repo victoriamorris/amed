@@ -100,8 +100,8 @@ def usage(extended=False):
     if extended:
         print('\nFor options E1 and LM1, Input file must be a .txt file with one AMED record per line')
         print('\nUse quotation marks (") around arguments which contain spaces')
-        print('\n\'AMED journal title lookup table.txt\' must be present in the folder K:\AMED\Exports\Lookup')
-        print('\n\'amed_citations.db\' must be present in the folder K:\AMED\Exports\Lookup')
+        print('\n\'AMED journal title lookup table.txt\' must be present in the folder \\ad.bl.uk\\bssdata\\AMED\\Exports\\Lookup')
+        print('\n\'amed_citations.db\' must be present in the folder \\ad.bl.uk\\bssdata\\AMED\\Exports\\Lookup')
     exit_prompt()
 	
 	
