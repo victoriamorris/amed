@@ -3,7 +3,18 @@ Tools for processing AMED data
 
 [[back to top]](#amed)
 
-## Requirements
+## Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Overview](#overview)
+- [Processing ETOC records before import to Excel](#pre)
+- [Indexing AMED records in Excel](#excel)
+- [Processing AMED records exported from Excel](#post)
+
+[[back to top]](#amed)
+
+## Requirements <a id="requirements"/>
 
 Requires:
 - the regex module from https://bitbucket.org/mrabarnett/mrab-regex. 
@@ -13,7 +24,7 @@ which may be package as part of the Python standard library.
 
 [[back to top]](#amed)
 
-## Installation
+## Installation <a id="installation"/>
 
 ### Direct download
 Pre-compiled executable files are provided in the folder [/exe](https://github.com/victoriamorris/amed/tree/master/exe).
@@ -41,12 +52,14 @@ compile_amed.sh
     
 [[back to top]](#amed)
 
-## Overview
+## Overview <a id="overview"/>
 ***amed_pre.exe*** is used to process ETOC records before import to Excel.
 Processed records are then imported to the spreadsheet ***AMED processing.xlsm***, where index terms can be added.
 The records are exported from Excel, and processing is completed using ***amed_post.exe***.
 
-## Processing ETOC records before import to Excel
+[[back to top]](#amed)
+
+## Processing ETOC records before import to Excel <a id="pre"/>
 
 ### Set up required files
 1. Ensure that ***amed_pre.exe*** is *either* saved to an executable path, 
@@ -107,7 +120,9 @@ to make sure that new journal titles have been added correctly.
 The database amed_citations.db should be checked periodically, 
 using software such as [DB Browser for SQLite](https://sqlitebrowser.org/).
 
-## Indexing AMED records in Excel
+[[back to top]](#amed)
+
+## Indexing AMED records in Excel <a id="excel"/>
 
 ### Set up required files
 1. Ensure that ***AMED processing.xlsm.*** is present in  the folder in which you are working.
@@ -158,7 +173,9 @@ The records from the AMED records tab will be exported (in UTF-8 encoding) to a 
 
 where YYYY MM DD are components of today's date.
 
-## Processing AMED records exported from Excel
+[[back to top]](#amed)
+
+## Processing AMED records exported from Excel <a id="post"/>
 
 ### Set up required files
 1. Ensure that ***amed_post.exe*** is *either* saved to an executable path, 
@@ -191,23 +208,24 @@ and range of accession numbers used.
 
 The fields contained in other files are summarised in the table below.
 
-|                        |                           | amdmonthYY.txt                  | amedMMYY for hosts.txt | AMEDmonth.spl                     | F164MMDD.dat                                    |
-|------------------------|---------------------------|---------------------------------|------------------------|-----------------------------------|-------------------------------------------------|
-| *Output file for*      |                           | **SilverPlatter<br/>and Ovid**  |                        | **Datastar, Dimdi<br/>and EBSCO** | **Dialog and Dialog2<br/>(also with F164.end)** |
-| *Long fields wrapped?* |                           | Y                               | Y                      | N                                 | Y                                               |
-| **Field**              | **Description**           |                                 |                        |                                   |                                                 | 
-| AN                     | Accession number          | Y                               | Y                      | Y                                 | Y                                               | 
-| UD                     | Date                      | Y                               | N                      | N                                 | N                                               |
-| AU                     | Authors                   | Y                               | Y                      | Y                                 | Y                                               |
-| TI                     | Title                     | Y                               | Y                      | Y                                 | Y                                               |
-| SO                     | Source                    | Y                               | Y                      | Y                                 | Y                                               |
-| ET                     | Entry terms               | Y                               | Y                      | Y                                 | Y                                               |
-| KW                     | Keywords                  | Y                               | Y                      | Y                                 | Y                                               |
-| MT                     | Minor terms               | Y                               | Y                      | Y                                 | Y                                               |
-| TY                     | Publication type          | Y                               | Y                      | Y                                 | Y                                               |
-| LA                     | Language                  | Y                               | Y                      | Y                                 | Y                                               |
-| ES                     | English summary indicator | Y                               | Y                      | Y                                 | Y                                               |
-| IS                     | ISSN                      | Y                               | Y                      | Y                                 | Y                                               |
-| MD                     | Abstract indicator        | Y                               | Y                      | Y                                 | Y                                               |
-| AB                     | Abstract                  | Y                               | Y                      | Y                                 | Y                                               |
+|                        |                           | amdmonthYY.txt             | amedMMYY for hosts.txt | AMEDmonth.spl                 | F164MMDD.dat                                |
+|------------------------|---------------------------|----------------------------|------------------------|-------------------------------|---------------------------------------------|
+| *Output file for*      |                           | **SilverPlatter and Ovid** |                        | **Datastar, Dimdi and EBSCO** | **Dialog and Dialog2 (also with F164.end)** |
+| *Long fields wrapped?* |                           | Y                          | Y                      | N                             | Y                                           |
+| **Field**              | **Description**           |                            |                        |                               |                                             | 
+| AN                     | Accession number          | Y                          | Y                      | Y                             | Y                                           | 
+| UD                     | Date                      | Y                          | N                      | N                             | N                                           |
+| AU                     | Authors                   | Y                          | Y                      | Y                             | Y                                           |
+| TI                     | Title                     | Y                          | Y                      | Y                             | Y                                           |
+| SO                     | Source                    | Y                          | Y                      | Y                             | Y                                           |
+| ET                     | Entry terms               | Y                          | Y                      | Y                             | Y                                           |
+| KW                     | Keywords                  | Y                          | Y                      | Y                             | Y                                           |
+| MT                     | Minor terms               | Y                          | Y                      | Y                             | Y                                           |
+| TY                     | Publication type          | Y                          | Y                      | Y                             | Y                                           |
+| LA                     | Language                  | Y                          | Y                      | Y                             | Y                                           |
+| ES                     | English summary indicator | Y                          | Y                      | Y                             | Y                                           |
+| IS                     | ISSN                      | Y                          | Y                      | Y                             | Y                                           |
+| MD                     | Abstract indicator        | Y                          | Y                      | Y                             | Y                                           |
+| AB                     | Abstract                  | Y                          | Y                      | Y                             | Y                                           |
 
+[[back to top]](#amed)
