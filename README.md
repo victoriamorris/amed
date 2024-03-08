@@ -42,6 +42,6 @@ compile_amed.sh
 [[back to top]](#amed)
 
 ## Overview
-$${\color{green}amed_pre.exe}$$ is used to process ETOC records before import to Excel.
+<span style="color:green">amed_pre.exe</span> is used to process ETOC records before import to Excel.
 Processed records are then imported to the spreadsheet $${\color{green}AMED processing.xlsm}$$, where index terms can be added.
 The records are exported from Excel, and processing is completed using $${\color{green}amed_post.exe}$$.
