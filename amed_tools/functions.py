@@ -25,6 +25,8 @@ set_threshold(400, 5, 5)
 ACCESSION_NUMBER = 0
 
 ARGS = {
+    'i': lambda parser: parser.add_argument('-i', metavar='<input_file>', required=True, action='store', type=str,
+                                            nargs=1, help='path to input file'),
     'i+': lambda parser: parser.add_argument('-i', metavar='<input_file>', required=True, action='store', type=str,
                                              nargs='+', help='path to input file(s)'),
     'o': lambda parser: parser.add_argument('-o', metavar='<output_file>', required=True, action='store', type=str,
@@ -206,7 +208,8 @@ def clean(s: str) -> str:
 
 
 def text_wrap(s: str) -> str:
-    if len(s) < 70: return s
+    if len(s) < 70:
+        return s
     while re.search(r'[^ ](?=.{,65}><)[^ ]{64,}', s) and '><' in s:
         s = re.sub(r'[^ ](?=.{,65}><)[^ ]{64,}', lambda m: m.group().replace('><', '> <', 1), s)
     while re.search(r'[^ ]{65,}', s):
