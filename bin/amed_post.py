@@ -18,73 +18,60 @@ __status__ = '4 - Beta Development'
 #       Classes
 # ====================
 
-class AmedRecord():
-    def __init__(self, record, export_type='LM'):
-        self.export_type = export_type
-        if self.export_type == 'Excel':
-            self.record = record.split('\u0009')
-            self.values = OrderedDict([
-                ('AN', 0),  # Accession number
-                ('AU', 4),  # Authors
-                ('TI', 2),  # Title
-                ('SO', 3),  # Source
-                ('ET', 8),  # Entry terms
-                ('KW', 9),  # Keywords
-                ('MT', 10),  # Minor terms
-                ('TY', 7),  # Publication type
-                ('LA', 11),  # Language
-                ('ES', 12),  # English summary indicator
-                ('IS', 1),  # ISSN
-                ('MD', 6),  # Abstract indicator
-                ('AB', 5),  # Abstract
-            ])
-        else:
-            self.record = record.strip('"').split('","')
-            self.values = OrderedDict([
-                ('AN', 1),  # Accession number
-                ('AU', 2),  # Authors
-                ('TI', 3),  # Title
-                ('SO', 4),  # Source
-                ('ET', 5),  # Entry terms
-                ('KW', 6),  # Keywords
-                ('MT', 7),  # Minor terms
-                ('TY', 8),  # Publication type
-                ('LA', 9),  # Language
-                ('ES', 10),  # English summary indicator
-                ('IS', 11),  # ISSN
-                ('MD', 12),  # Abstract indicator
-                ('AB', 14),  # Abstract
-            ])
+class AmedRecord:
+    def __init__(self, record):
+        self.record = record.split('\t')
+        logging.info(self.record)
+        self.values = OrderedDict([
+            ('AN', 0),  # Accession number
+            ('AU', 5),  # Authors
+            ('TI', 3),  # Title
+            ('SO', 4),  # Source
+            ('ET', 9),  # Entry terms
+            ('KW', 10),  # Keywords
+            ('MT', 11),  # Minor terms
+            ('TY', 8),  # Publication type
+            ('LA', 12),  # Language
+            ('ES', 13),  # English summary indicator
+            ('IS', 1),  # ISSN
+            ('MD', 7),  # Abstract indicator
+            ('AB', 6),  # Abstract
+        ])
         for v in self.values:
             try:
                 self.values[v] = clean(self.record[self.values[v]])
             except:
                 self.values[v] = None
-            if self.values[v] == '"': self.values[v] = None
-            if self.export_type == 'Excel':
-                if self.values[v] and self.values[v].startswith('"') and self.values[v].endswith('"'):
-                    self.values[v] = self.values[v].strip('"')
+            if self.values[v] == '"':
+                self.values[v] = None
+            if self.values[v] and self.values[v].startswith('"') and self.values[v].endswith('"'):
+                self.values[v] = self.values[v].strip('"')
+            if v in ['ET', 'KW', 'MT', 'TY']:
+                self.values[v] = ', '.join(val for val in sorted(self.values[v].split(',')) if val)
         self.id = self.values['AN']
-        if self.values['AB'] and not self.values['MD']: self.values['MD'] = 'AB'
+        if self.values['AB'] and not self.values['MD']:
+            self.values['MD'] = 'AB'
 
     def __str__(self):
         s = '\n     [REC]'
         for v in self.values:
             if self.values[v]:
-                s += '\n     ' + text_wrap('{}: {}]'.format(v, self.values[v]))
+                s += '\n     ' + text_wrap(f'{str(v)}: {str(self.values[v])}]')
             else:
                 s += ']'
-        if not self.values['AB']: s += ']'
+        if not self.values['AB']:
+            s += ']'
         return s
 
     def no_wrap(self):
         s = '\n     [REC]'
         for v in self.values:
             if self.values[v]:
-                s += '\n     {}: {}]'.format(v, self.values[v])
+                s += f'\n     {v}: {self.values[v]}]'
             else:
                 s += ']'
-        if not self.values['AB']: s += ']'
+        if not self.values['AB']:
+            s += ']'
         return s
 
 
@@ -93,24 +80,44 @@ class AmedRecord():
 # ====================
 
 
-"""
-def amed_post(export_type='LM', ifile=None, month=None):
-    if not ifile:
-        exit_prompt('Error: No path to input file has been specified')
+NAME = 'amed_post'
+SUMMARY = 'Process AMED files exported from Excel'
 
-    # Get date parameters for output filenames
-    if month:
-        try:
-            month = int(month)
-        except:
-            exit_prompt('Error: The value of the parameter --month must be an integer')
-        today = datetime.date.today()
-        if month == 12 and today.month <= 5:
-            today = datetime.date(today.year - 1, month, today.day)
-        else:
-            today = datetime.date(today.year, month, today.day)
-    else:
-        today = datetime.date.today()
+
+def main(args=None):
+    if args is None:
+        name = str(argv[1])
+
+    amed = AMED(NAME, SUMMARY, ['i', 'c'])
+    args = amed.parse_args(args)
+
+    check_file_location(args.c[0], 'config file')
+    date_time_message(f'Reading config file from {str(args.c[0])}')
+
+    today = datetime.date.today()
+    month = today.month
+
+    cfile = open(args.c[0], mode='r', encoding='utf-8', errors='replace')
+    for line in cfile:
+        if line.startswith('MONTH'):
+            month = line.strip().split('=', 1)[1].strip()
+            try:
+                month = int(month)
+            except:
+                date_time_exit('Error: The value of the parameter MONTH must be an integer')
+            if month == 0:
+                today = datetime.date.today()
+                month = today.month
+            if not 1 <= month <= 12:
+                date_time_exit('Error: The value of the parameter MONTH must be between 1 and 12')
+            if month == 12 and today.month <= 5:
+                today = datetime.date(today.year - 1, month, today.day)
+            else:
+                today = datetime.date(today.year, month, today.day)
+    cfile.close()
+
+    logging.info(f'MONTH: {str(month)}')
+    logging.info(f'Processing date: {str(today)}')
 
     output_files = OrderedDict([
         ('hosts', 'AMED{:%m%y} for hosts.txt'.format(today).lower()),
@@ -121,43 +128,42 @@ def amed_post(export_type='LM', ifile=None, month=None):
         ('end', 'F164.end'),
     ])
 
-    # --------------------
-    # Parameters seem OK => start program
-    # --------------------
-
-    # Display confirmation information about the transformation
-
-    print('Input file: {}'.format(str(ifile.path)))
-    print('Processing date: {}'.format(str(today)))
+    file = args.i[0]
+    if not os.path.isfile(file):
+        raise AMEDError(f'Error: Could not locate {str(file)}')
 
     # --------------------
     # Process input file
     # --------------------
 
+    log_print(f'Input file: {str(file)}')
+
+    # Open input and output files
+    ifile = open(file, mode='r', encoding='utf-8', errors='replace')
+
     first, last, count = None, '', 0
     for f in output_files:
         output_files[f] = open(output_files[f], mode='w', encoding='utf-8', errors='replace', newline='\r\n')
 
-    # Open input and output files
-    ifile = open(ifile.path, mode='r', encoding='utf-8', errors='replace')
     for f in ['hosts', 'spl', 'dat', 'txt']:
         output_files[f].write('[STA]')
 
+    count = 0
     for filelineno, line in enumerate(ifile):
-        if export_type == 'Excel' and filelineno == 0: continue
+        if filelineno == 0:
+            continue
         count += 1
-        print('{} records processed'.format(str(count)), end='\r')
-        if export_type == 'Excel':
-            amed = AmedRecord(clean(line.strip('\n')), export_type=export_type)
-        else:
-            # Unescape Unicode escape sequences at this point
-            amed = AmedRecord(clean(html.unescape(line.strip())), export_type=export_type)
+        print(f'{str(filelineno)} records processed', end='\r')
+        rec = AmedRecord(line.strip('\n'))
         for f in ['hosts', 'dat']:
-            output_files[f].write(str(amed))
-        output_files['spl'].write(amed.no_wrap())
-        output_files['txt'].write(str(amed).replace('     AU:', '     UD: {:%Y%m}]\n     AU:'.format(today)))
-        if not first: first = amed.id
-    if not last: last = amed.id
+            output_files[f].write(str(rec))
+        output_files['spl'].write(rec.no_wrap())
+        output_files['txt'].write(str(rec).replace('     AU:', '     UD: {:%Y%m}]\n     AU:'.format(today)))
+        for f in output_files:
+            output_files[f].flush()
+        if not first:
+            first = rec.id
+        last = rec.id
     for f in ['hosts', 'spl', 'dat', 'txt']:
         output_files[f].write('\n[END]\n')
     ifile.close()
@@ -165,34 +171,18 @@ def amed_post(export_type='LM', ifile=None, month=None):
     output_files['end'].write('FILE f164{:%m%d}.dat'.format(today))
 
     # Write statistics
-    output_files['stats'].write('Number of records processed: {}\n'.format(str(count)))
-    output_files['stats'].write('First record: {}\n'.format(first))
-    output_files['stats'].write('Last record: {}\n'.format(last))
-    if export_type == 'Excel':
-        output_files['stats'].write('Start next processing with accession number: {}\n'.format(str(int(last) + 1)))
+    output_files['stats'].write(f'Number of records processed: {str(count)}\n')
+    output_files['stats'].write(f'First record: {first}\n')
+    output_files['stats'].write(f'Last record: {last}\n')
+    output_files['stats'].write(f'Start next processing with accession number: {str(int(last) + 1)}\n')
     output_files['stats'].write('\n\nText for email:\n\n' +
                                 'The {:%m/%Y} update for AMED is now on the FTP server. '.format(today) +
-                                'There are {} records ({} to {})'.format(str(count), first, last))
+                                f'There are {str(count)} records ({first} to {last})')
 
     # Close files
     for f in output_files:
         output_files[f].close()
 
-    date_time_exit()
-"""
-
-NAME = 'amed_post'
-SUMMARY = 'Process AMED files exported from Excel'
-
-
-def main(args=None):
-
-    if args is None:
-        name = str(argv[1])
-
-    amed = AMED(NAME, SUMMARY, ['i+', 'c'])
-    args = amed.parse_args(args)
-    total = 0
     date_time_exit()
 
 

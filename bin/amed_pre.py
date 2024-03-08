@@ -182,7 +182,6 @@ def main(args=None):
             # --------------------
             # Process input file
             # --------------------
-            today = datetime.date.today()
 
             # Open input and output files
             ifile = open(file, mode='r', encoding='utf-8', errors='replace')
