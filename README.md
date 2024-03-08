@@ -191,25 +191,23 @@ and range of accession numbers used.
 
 The fields contained in other files are summarised in the table below.
 
-|       | | Present in … ? |
-|       | | amdmonthYY.txt | amedMMYY for hosts.txt | AMEDmonth.spl | F164MMDD.dat |
-| ----- | --- | --- | --- | --- | --- |
-| Output file for | SilverPlatter and Ovid |  | Datastar, Dimdi and EBSCO | Dialog and Dialog2 (also with F164.end)|
-| Long fields wrapped? | Y | Y | N | Y |
-| ---   | ---------------- | --- | --- | --- | --- |
-| Field | Description      | | | |  |  |  |  | 
-| AN    | Accession number | Y | Y | Y | Y | |
-| UD    | Date             | Y | N | N | N |
-| AU    | Authors          | Y | Y | Y | Y |
-| TI    | Title                     | Y | Y | Y | Y |
-| SO    | Source                    | Y | Y | Y | Y |
-| ET    | Entry terms               | Y | Y | Y | Y |
-| KW    | Keywords                  | Y | Y | Y | Y |
-| MT    | Minor terms               | Y | Y | Y | Y |
-| TY    | Publication type          | Y | Y | Y | Y |
-| LA    | Language                  | Y | Y | Y | Y |
-| ES    | English summary indicator | Y | Y | Y | Y |
-| IS    | ISSN                      | Y | Y | Y | Y |
-| MD    | Abstract indicator        | Y | Y | Y | Y |
-| AB    | Abstract                  | Y | Y | Y | Y |
+|                        |                           | amdmonthYY.txt                  | amedMMYY for hosts.txt | AMEDmonth.spl                     | F164MMDD.dat                                    |
+|------------------------|---------------------------|---------------------------------|------------------------|-----------------------------------|-------------------------------------------------|
+| *Output file for*      |                           | **SilverPlatter<br/>and Ovid**  |                        | **Datastar, Dimdi<br/>and EBSCO** | **Dialog and Dialog2<br/>(also with F164.end)** |
+| *Long fields wrapped?* |                           | Y                               | Y                      | N                                 | Y                                               |
+| **Field**              | **Description**           |                                 |                        |                                   |                                                 | 
+| AN                     | Accession number          | Y                               | Y                      | Y                                 | Y                                               | 
+| UD                     | Date                      | Y                               | N                      | N                                 | N                                               |
+| AU                     | Authors                   | Y                               | Y                      | Y                                 | Y                                               |
+| TI                     | Title                     | Y                               | Y                      | Y                                 | Y                                               |
+| SO                     | Source                    | Y                               | Y                      | Y                                 | Y                                               |
+| ET                     | Entry terms               | Y                               | Y                      | Y                                 | Y                                               |
+| KW                     | Keywords                  | Y                               | Y                      | Y                                 | Y                                               |
+| MT                     | Minor terms               | Y                               | Y                      | Y                                 | Y                                               |
+| TY                     | Publication type          | Y                               | Y                      | Y                                 | Y                                               |
+| LA                     | Language                  | Y                               | Y                      | Y                                 | Y                                               |
+| ES                     | English summary indicator | Y                               | Y                      | Y                                 | Y                                               |
+| IS                     | ISSN                      | Y                               | Y                      | Y                                 | Y                                               |
+| MD                     | Abstract indicator        | Y                               | Y                      | Y                                 | Y                                               |
+| AB                     | Abstract                  | Y                               | Y                      | Y                                 | Y                                               |
 
