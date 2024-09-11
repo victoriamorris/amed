@@ -4,7 +4,7 @@
 """setup.py file for amed_tools."""
 
 # Import required modules
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 __author__ = 'Victoria Morris'
 __license__ = 'MIT License'
@@ -14,8 +14,6 @@ __status__ = '4 - Beta Development'
 # List requirements.
 # All other requirements should all be contained in the standard library
 requirements = [
-    'regex',
-    'sqlite3'
 ]
 
 # Setup
