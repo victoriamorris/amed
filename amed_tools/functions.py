@@ -7,7 +7,7 @@ from gc import set_threshold, collect
 import glob
 from locale import setlocale, LC_ALL
 import os
-import regex as re
+import  re
 from sys import exit, argv
 import unicodedata
 from amed_tools.logs import *
@@ -184,7 +184,8 @@ def normalize_space(s: str) -> str:
 
 
 def clean(s: str) -> str:
-    s = re.sub(r'[\u0020\u00A0\u1680\u2000-\u200A\u202F\u205F\u3000]+', ' ', s)
+    s = re.sub(r'^[\uFEFF]+', '', s)
+    s = re.sub(r'[\u0020\u00A0\u1680\u2000-\u200A\u202F\u205F\u3000\uFEFF]+', ' ', s)
 
     s = re.sub(r'[\u002D\u2010-\u2015]', '-', s)
     s = s.replace('@@@', ', ').replace('//', ', ')
