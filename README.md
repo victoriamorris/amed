@@ -146,6 +146,9 @@ Records will be imported ino the ***AMED records*** sheet.
 
 ![Figure 5: Extract from AMED records](images/fig5.png)
 
+> [!IMPORTANT]
+> Check that characters with diacritics have imported correctly.
+
 The blue columns contain imported data. 
 Scroll to the right to see green columns, into which index terms can be added.
 
