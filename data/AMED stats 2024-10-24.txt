@@ -1,0 +1,9 @@
+Number of records processed: 1275
+First record: 9000001
+Last record: 9001328
+Start next processing with accession number: 9001329
+
+
+Text for email:
+
+The 10/2024 update for AMED is now on the FTP server. There are 1275 records (9000001 to 9001328)
